@@ -1,0 +1,23 @@
+$tamanio-cuadrado: 7em;
+$anchoCelda: 33%;
+
+$anchoTateti: 50em;
+$altoTateti: 30em;
+$colorTateti: #9fd8ee;
+
+.tamanioFilas{
+    height: $tamanio-cuadrado;
+    width: 100%;
+}
+
+.anchoCelda{
+    width: $anchoCelda;
+}
+
+.tateti{
+    // height: $altoTateti;
+    width: $anchoTateti;
+    background-color: $colorTateti;
+    // border: 1px solid;
+    padding: 0px;
+}

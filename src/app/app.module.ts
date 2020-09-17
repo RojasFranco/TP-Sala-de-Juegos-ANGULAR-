@@ -54,6 +54,13 @@ import { AgmCoreModule } from '@agm/core';
 import { InputJugadoresComponent } from './componentes/input-jugadores/input-jugadores.component';
 import { SexoPipe } from './pipes/sexo.pipe';
 import { PptComponent } from './componentes/ppt/ppt.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import { TatetiComponent } from './componentes/tateti/tateti.component';
+import { MemotestComponent } from './componentes/memotest/memotest.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 @NgModule({
   declarations: [
@@ -80,16 +87,24 @@ import { PptComponent } from './componentes/ppt/ppt.component';
     JugadoresListadoComponent,
     InputJugadoresComponent,
     SexoPipe,
-    PptComponent
+    PptComponent,
+    TatetiComponent,
+    MemotestComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RuteandoModule,
     HttpModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatGridListModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB6f8x4IjRlesQ3oETc6BXYQHVRTOlY3Ys'
-    })
+    }),
+    // NoopAnimationsModule,
+    // BrowserAnimationsModule
     // NgbModule.forRoot(MiRuteo),
     // importo el ruteo
     // RouterModule.forRoot(MiRuteo)

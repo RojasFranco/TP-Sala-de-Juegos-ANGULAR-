@@ -17,7 +17,7 @@ export class JuegoAnagrama extends Juego{
     }
 
     public verificar(): boolean {
-        throw new Error('Method not implemented.');
+        return this.palabraIngresada.toLowerCase()==this.palabraSecreta;
     } 
     
     public GenerarPalabra(){        

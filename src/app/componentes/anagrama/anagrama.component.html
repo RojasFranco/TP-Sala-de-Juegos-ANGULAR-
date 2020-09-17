@@ -1,19 +1,26 @@
 <div class="container text-center">
   <h1> {{ nuevoJuego.nombre }} </h1>
-  <h3>Reglas: Se brinda una palabra desordenada y debe ordenarla antes que acabe el tiempo
+  <h3>Reglas: Se brinda una palabra desordenada y debe ordenarla 
   Tiene 3 intentos</h3>
 </div>
-<div class="container text-center" [hidden]="ocultarBtnJugar">
-  <button (click)="GenerarPalabras()" class="btn btn-primary">Jugar</button>
+<div class="container text-center mt-5" [hidden]="ocultarBtnJugar">
+  <button (click)="GenerarPalabras()" mat-raised-button color="primary">Jugar</button>
 </div>
 
-  <div class="container text-center" [hidden]="ocultarPalabras">
-    <p>Palabra desordenada: {{ palabraDesordenada }}</p>
+<div class="container text-center my-3" [hidden]="ocultarPalabras">
+    <!-- <p>Palabra desordenada: {{ palabraDesordenada }}</p> -->
+    <div class="alert alert-success" role="alert">
+      Palabra desordenada: {{ palabraDesordenada }}
+    </div>
 
-    <input type="text" [(ngModel)]="nuevoJuego.palabraIngresada" placeholder="Ingrese la balabra..." maxlength="15"> 
+    <input type="text" class="form-control text-center" [(ngModel)]="nuevoJuego.palabraIngresada" placeholder="Ingrese la balabra..." maxlength="15"> 
 
-    <button mat-button color="primary">Listo</button>
-  </div>  
+    <button (click)="Verificar()" class="btn btn-success my-3">Listo</button>
+    <p *ngIf="mostrarError" class="alert-danger my-3">No es correcto, te quedan {{ intentos }} intentos</p>
+ </div>  
 
-  
+  <div class="container" [hidden]="ocultarResultado">
+    <p> Resultado: {{ respuesta }}</p>
+    <p *ngIf= "mostrarRta">La respuesta era {{ nuevoJuego.palabraSecreta }}</p>
+  </div>
 
