@@ -1,4 +1,4 @@
 export class JuegoAgilidad {
-    public numeroIngresado;
-    public gano;
+    public numeroIngresado: string;
+    public gano: boolean;
 }

@@ -1,3 +1,19 @@
-<p>
-  anagrama works!
-</p>
+<div class="container text-center">
+  <h1> {{ nuevoJuego.nombre }} </h1>
+  <h3>Reglas: Se brinda una palabra desordenada y debe ordenarla antes que acabe el tiempo
+  Tiene 3 intentos</h3>
+</div>
+<div class="container text-center" [hidden]="ocultarBtnJugar">
+  <button (click)="GenerarPalabras()" class="btn btn-primary">Jugar</button>
+</div>
+
+  <div class="container text-center" [hidden]="ocultarPalabras">
+    <p>Palabra desordenada: {{ palabraDesordenada }}</p>
+
+    <input type="text" [(ngModel)]="nuevoJuego.palabraIngresada" placeholder="Ingrese la balabra..." maxlength="15"> 
+
+    <button mat-button color="primary">Listo</button>
+  </div>  
+
+  
+

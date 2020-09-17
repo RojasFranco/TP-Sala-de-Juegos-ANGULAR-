@@ -1,0 +1,34 @@
+<div class="text-center">
+    <h2>Bienvenido a PPT</h2>
+    <!-- <h3>Puntuacion</h3>
+    <h4>Victoria: 3 puntos</h4>
+    <h4>Empate: 1 punto</h4>
+    <h4>Derrota: 0 puntos</h4> -->
+</div>
+
+<div class="container">
+    <div class="row border text-center my-3">
+        <div class="col">
+            <p>Maquina</p>
+            <img src="{{ srcMaquina }}" class="my-2" height="260px" width="250px" alt="">
+        </div>
+        <div class="col">
+            <p>TU</p>
+            <img src="{{ srcJugador }}" height="260px" width="250px" class="my-2" alt="">
+            <div [hidden]="!estaEnJuego">
+                Elige opcion
+                <button (click)="elegirPiedra()"><img src="{{ this.srcPiedra }}" height="40px" width="40px" alt=""></button>
+                <button (click)="elegirPapel()" class="mx-2"><img src="{{ this.srcPapel }}" height="40px" width="40px" alt=""></button>
+                <button (click)="elegirTijera()"><img src="{{ this.srcTijera }}" height="40px" width="40px" alt=""></button>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <p [hidden]="ocultarMostrarError" class="alert-danger">Debe seleccionar opcion</p>
+        <button (click)="Jugar()" [hidden] = "estaEnJuego" class="btn btn-primary btn-lg">Jugar</button>
+        <button (click)="Verificar()" [hidden] = "!estaEnJuego" class="btn btn-success btn-lg">Listo</button>
+
+        <p *ngIf="resultadoJuego">Resultado: {{ resultadoJuego }}</p>        
+    </div>
+</div>
+

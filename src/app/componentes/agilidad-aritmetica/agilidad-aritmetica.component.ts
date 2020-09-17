@@ -11,10 +11,15 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 export class AgilidadAritmeticaComponent implements OnInit {
    @Output() 
   enviarJuego :EventEmitter<any>= new EventEmitter<any>();
-  nuevoJuego : JuegoAgilidad;
+  nuevoJuego : JuegoAgilidad; //numeroIngresado   gano
   ocultarVerificar: boolean;
   Tiempo: number;
   repetidor:any;
+  primerNro: number;
+  segundoNro: number;
+  operadores: Array<string>;  
+  operador: string;
+  solucion: number;
   private subscription: Subscription;
   ngOnInit() {
   }
@@ -22,10 +27,15 @@ export class AgilidadAritmeticaComponent implements OnInit {
      this.ocultarVerificar=true;
      this.Tiempo=5; 
     this.nuevoJuego = new JuegoAgilidad();
-    console.info("Inicio agilidad");  
+    this.operadores = new Array<string>();
+    this.operadores.push("+","-","*","/");
+    console.info("Inicio agilidad");      
+    console.log(this.operadores);
   }
   NuevoJuego() {
     this.ocultarVerificar=false;
+    this.generarCuenta();
+    this.nuevoJuego.numeroIngresado=null;
    this.repetidor = setInterval(()=>{ 
       
       this.Tiempo--;
@@ -41,11 +51,34 @@ export class AgilidadAritmeticaComponent implements OnInit {
   }
   verificar()
   {
-    this.ocultarVerificar=false;
+    this.ocultarVerificar=true;
+    if(parseInt(this.nuevoJuego.numeroIngresado)==this.solucion){
+      this.nuevoJuego.gano = true;
+    }
     clearInterval(this.repetidor);
-   
+    this.Tiempo=5;
 
    
   }  
+
+  generarCuenta(){
+    this.primerNro = parseInt((Math.random()*10).toString());
+    this.segundoNro = parseInt((Math.random()*10).toString());
+    this.operador = this.operadores[Math.floor(Math.random()*4)];
+    switch (this.operador) {
+      case "+":
+        this.solucion=this.primerNro+this.segundoNro;
+        break;
+      case "-":
+        this.solucion = this.primerNro-this.segundoNro;  
+        break;
+      case "*":
+        this.solucion = this.primerNro*this.segundoNro;  
+        break;    
+      default:
+        this.solucion = this.primerNro/this.segundoNro;
+        break;
+    }
+  }
 
 }

@@ -21,6 +21,8 @@ import { QuienSoyComponent } from '../componentes/quien-soy/quien-soy.component'
 import { ListadoDePaisesComponent } from '../componentes/listado-de-paises/listado-de-paises.component'
 import { MapaDeGoogleComponent } from '../componentes/mapa-de-google/mapa-de-google.component'
 import { JugadoresListadoComponent } from '../componentes/jugadores-listado/jugadores-listado.component';
+import { PptComponent } from '../componentes/ppt/ppt.component';
+import { AnagramaComponent } from '../componentes/anagrama/anagrama.component';
 
 
 // declaro donde quiero que se dirija
@@ -42,6 +44,8 @@ children:
      {path: 'Adivina' , component: AdivinaElNumeroComponent},
       {path: 'AdivinaMasListado' , component: AdivinaMasListadoComponent},
       {path: 'AgilidadaMasListado' , component: AgilidadMasListadoComponent},
+      {path: 'PiedraPapelTijera', component: PptComponent },
+      {path: 'Anagrama', component: AnagramaComponent},
       {path: 'Agilidad' , component: AgilidadAritmeticaComponent}]
 },
 {path: '**' , component: ErrorComponent},
