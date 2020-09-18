@@ -36,6 +36,8 @@
     "ngx-bootstrap": "^1.9.1",
     "path": "^0.12.7",
     "popper": "^1.0.1",
+    "primeicons": "^4.0.0",
+    "primeng": "^10.0.0",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.0.0-rc.0",
     "tslib": "^2.0.0",

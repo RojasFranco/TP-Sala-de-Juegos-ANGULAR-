@@ -7,7 +7,7 @@
     margin: 10px;
     padding-bottom: 10px;
     float: left;
-  background-color: #DEF3A6;
+  background-color: #d1cfe6;
     text-align: center;
 }
 
@@ -32,10 +32,10 @@ img {
     cursor: pointer;
     outline: none;
     color: #fff;
-    background-color: #4CAF50;
+    background-color: #0a144d;
     border: none;
     border-radius: 15px;
-    box-shadow: 0 9px #999;
+    box-shadow: 0 9px rgb(209, 204, 204);
 
     border: none;
     outline: 0;
@@ -48,10 +48,10 @@ img {
     width: 100%;
   }
   
-  .button:hover {background-color: #3e8e41}
+  .button:hover {background-color: #3e5e8e}
   
   .button:active {
-    background-color: #3e8e41;
+    background-color: #0a144d;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }

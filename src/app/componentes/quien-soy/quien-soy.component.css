@@ -1,6 +1,5 @@
 .imagenDeQuienSoy{
     width: 100%;
-   
     }
 body {
     font: 20px Montserrat, sans-serif;
@@ -8,13 +7,14 @@ body {
     color: #f5f6f7;
 }
 p {font-size: 16px;}
-.margin {margin-bottom: 45px;}
+.margin {margin-bottom: 45px;
+border-radius: 50px;}
 .bg-1 { 
-    background-color: #1abc9c; /* Green */
+    background-color: #07225a;
     color: #ffffff;
 }
 .bg-2 { 
-    background-color: #474e5d; /* Dark Blue */
+    background-color: #066350;
     color: #ffffff;
 }
 .bg-3 { 
@@ -40,4 +40,9 @@ p {font-size: 16px;}
 }
 .navbar-nav  li a:hover {
     color: #1abc9c !important;
+}
+
+.txtNav{
+    color:white;
+    margin-left: 10px;
 }
