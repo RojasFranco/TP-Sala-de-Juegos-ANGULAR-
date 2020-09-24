@@ -1,0 +1,11 @@
+li{
+    color: rgb(250, 250, 250);
+}
+
+li:hover{
+    color: rgb(128, 128, 240);
+}
+
+a{
+    color: white;
+}

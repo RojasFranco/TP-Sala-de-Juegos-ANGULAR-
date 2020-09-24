@@ -14,30 +14,45 @@ export class TatetiComponent implements OnInit {
   estaEnJuego: boolean = false;
   posiciones: Array<any>;
   mostrarErrorAlElegirPosicion: boolean = false;
+  juegoTermino: boolean = false;
 
   constructor() {
     this.nuevoJuego = new JuegoTateti("TaTeTi");
-    this.posiciones = ['-', '-','-','-','-','-','-','-','-']; //9
+    this.posiciones = ['-', '-','-','-','-','-','-','-','-']; // 9 posiciones
    }
 
   ngOnInit(): void {
   }
 
-  GenerarTablero(){
+  GenerarTablero(){    
+    this.posiciones = ['-', '-','-','-','-','-','-','-','-']; // 9 posiciones
     this.estaEnJuego = true;
-
-
+    this.juegoTermino=false;
   }
 
   seleccionar(posicionSeleccionada){
-    this.mostrarErrorAlElegirPosicion = false;
-    if(this.posiciones[posicionSeleccionada]=="-"){
-      this.posiciones[posicionSeleccionada] = "X";      
-      //VERIFICAR SI ALGUIEN GANO
-      this.ElegirOpcionMaquina();
+    if(this.juegoTermino){
+      alert("El juego termino, comience nuevamente");
     }
     else{
-      this.mostrarErrorAlElegirPosicion = true;
+      this.mostrarErrorAlElegirPosicion = false;
+      if(this.posiciones[posicionSeleccionada]=="-"){
+        this.posiciones[posicionSeleccionada] = "X";      
+        if(this.AlgunoGano()){
+          this.MostrarGanador("jugador");
+          this.juegoTermino=true;
+        }
+        else{
+          this.ElegirOpcionMaquina();
+          if(this.Empataron()){
+            this.MostrarGanador("ninguno, fue empate");
+            this.juegoTermino = true;
+          }
+        }      
+      }
+      else{
+        this.mostrarErrorAlElegirPosicion = true;
+      }
     }
   }
 
@@ -55,7 +70,10 @@ export class TatetiComponent implements OnInit {
         let posicion = Math.floor(Math.random()*9);
         if(this.posiciones[posicion]=="-"){
           this.posiciones[posicion] = "O";
-          // VERIFICAR SI GANO
+          if(this.AlgunoGano()){
+            this.MostrarGanador("maquina");
+            this.juegoTermino=true;
+          }
           aunNoEligio=false;
         }
       }
@@ -65,10 +83,37 @@ export class TatetiComponent implements OnInit {
     }
   }
 
-  AlgunoGano(){
-    if(this.posiciones[0] == this.posiciones[1] == this.posiciones[2]){
-      //gano
+  AlgunoGano():boolean{
+    if(this.posiciones[0]!='-' && this.posiciones[0] == this.posiciones[4] && this.posiciones[4] ==this.posiciones[8] ||
+      this.posiciones[2]!='-' && this.posiciones[2] == this.posiciones[4] && this.posiciones[4] == this.posiciones[6]){
+        return true; 
     }
+    else{
+      for (let index = 0; index < 3; index++) {
+        if(this.posiciones[index]!='-' && this.posiciones[index] == this.posiciones[index+3] && this.posiciones[index+3] == this.posiciones[index+6]){
+          return true;
+        }
+      }
+      for (let index = 0; index < 7; index+=3) {        
+        if(this.posiciones[index]!='-' && this.posiciones[index]  == this.posiciones[index+1] && this.posiciones[index+1]==this.posiciones[index+2]){
+          return true;
+        }        
+      }
+    }
+    return false;    
   }
 
+  MostrarGanador(jugadorGanador: string){
+    alert("Gano: "+jugadorGanador);
+  }
+
+  Empataron(){
+    let empataron = true;
+    this.posiciones.forEach(element => {
+      if(element=='-'){
+        empataron = false; 
+      }
+    });
+    return empataron;
+  }
 }

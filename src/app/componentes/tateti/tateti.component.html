@@ -3,34 +3,6 @@
 </div>
 
 <div class="container mt-5 tateti" *ngIf="estaEnJuego">
-    <!-- <div class="row tamanioFilas">
-        <button mat-flat-button class="anchoCelda" (click)=seleccionar(0,1)>{{ posiciones[0][0] }}</button>
-        <button mat-flat-button class="anchoCelda">{{ posiciones[0][1] }}</button>
-        <button mat-flat-button class="anchoCelda">{{ posiciones[0][2] }}</button>
-    </div>    
-    <div class="row tamanioFilas">
-        <button mat-flat-button class="anchoCelda">{{ posiciones[1][0] }}</button>
-        <button mat-flat-button class="anchoCelda">{{ posiciones[1][1] }}</button>
-        <button mat-flat-button class="anchoCelda">{{ posiciones[1][2] }}</button>
-    </div>
-    <div class="row tamanioFilas">
-        <button mat-flat-button class="anchoCelda">{{ posiciones[2][0] }}</button>
-        <button mat-flat-button class="anchoCelda">{{ posiciones[2][1] }}</button>
-        <button mat-flat-button class="anchoCelda">{{ posiciones[2][2] }}</button>
-    </div> -->
-    <!-- <mat-grid-list cols="3" class="tamanioTateti" >
-        <mat-grid-tile>-</mat-grid-tile>
-        <mat-grid-tile class="border">-</mat-grid-tile>
-        <mat-grid-tile  class="border">-</mat-grid-tile>
-        <mat-grid-tile>-</mat-grid-tile>
-      </mat-grid-list> -->
-
-      <!-- <mat-grid-list cols="3">
-        <mat-grid-tile *ngFor="let cuadrado of cuadradosGrilla; let i = index" [style.background]="cuadrado.color" (click)="usuarioColocaLaX(i)">
-          {{cuadrado.texto}}
-        </mat-grid-tile>
-      </mat-grid-list> -->
-
       <mat-grid-list cols="3" rowHeight="2:1" class="tateti">
         <mat-grid-tile class="border" *ngFor="let celda of posiciones; let i = index" 
         (click)="seleccionar(i)">{{ celda }}</mat-grid-tile>
@@ -39,4 +11,8 @@
 
 <div class="container text-center">
     <p *ngIf="mostrarErrorAlElegirPosicion" class="alert-danger my-3">Esa posicion ya esta ocupada, elija otra</p>
+</div>
+
+<div class="container text-center mt-3">
+  <button *ngIf="juegoTermino" mat-raised-button color="primary" (click)="GenerarTablero()">Jugar de nuevo</button>
 </div>

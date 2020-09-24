@@ -21,24 +21,24 @@
     </div>
   </div>
 </div-->
- <div class="container" >
-  <div class="jumbotron" style="padding:50px;">
-    <form action="return true;">
+ <div class="container p-0 mt-2" >
+  <!-- <div class="jumbotron" style="padding:50px;"> -->
+    <form action="return true;" class="px-3 my-0">
       <div class="imgcontainer">
-        <img src="./assets/imagenes/login.png" alt="Avatar" class="avatar" max-width="104" >
+        <img src="./assets/imagenes/login.png" alt="Avatar" class="avatar" height="100%" width="100%" >
       </div>
 
-      <div class="container">
+      <div class="">
         <label><b>Usuario</b></label>
-        <input type="text" placeholder="Usuario"  [(ngModel)]="usuario"  name="uname" required>
+        <input type="text" placeholder="Ingrese su correo..." class="form-control" [(ngModel)]="usuario.correo"  name="uname" required>
 
         <label><b>Clave</b></label>
-        <input type="password" placeholder="Clave"  [(ngModel)]="clave" name="psw" required>
+        <input type="password" placeholder="Ingrese su Clave..."  class="form-control" [(ngModel)]="usuario.clave" name="psw" required>
             
         <button *ngIf="logeando"  (click)="MoverBarraDeProgreso()" >Ingresar</button>
        
         <div *ngIf="!logeando" class="progress">
-            <div class="progress-bar progress-bar-info progress-bar-striped active" [class]="clase" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" [style.width]="ProgresoDeAncho" >
+            <div class="progress-bar bg-info progress-bar-striped active" [class]="clase" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" [style.width]="ProgresoDeAncho" >
               {{progresoMensaje}} - {{progreso}}%
             </div>
         </div>
@@ -46,12 +46,13 @@
         <input type="checkbox" checked="checked"> Recordar mis datos
       </div>
 
-      <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn">Cancelar</button>
+      <!-- <div class="p-2" style="background-color:#f1f1f1"> -->
+      <div class="p-2">
         <button type="button" class="aceptbtn" routerLink="/Registro" >Registrarse</button>
+        <button type="button" (click)="Volver()" class="cancelbtn ml-2">Cancelar</button>        
         <span class="psw">Te olvidaste <a href="#">la clave?</a></span>
       </div>
      
     </form>
-  </div>
+  <!-- </div> -->
 </div>

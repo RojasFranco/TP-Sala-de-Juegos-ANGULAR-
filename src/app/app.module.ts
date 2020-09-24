@@ -60,6 +60,10 @@ import {MatButtonModule} from '@angular/material/button';
 import { TatetiComponent } from './componentes/tateti/tateti.component';
 import { MemotestComponent } from './componentes/memotest/memotest.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -89,7 +93,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     SexoPipe,
     PptComponent,
     TatetiComponent,
-    MemotestComponent
+    MemotestComponent,
+    AhorcadoComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +105,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatInputModule,
     MatButtonModule,
     MatGridListModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB6f8x4IjRlesQ3oETc6BXYQHVRTOlY3Ys'
     }),

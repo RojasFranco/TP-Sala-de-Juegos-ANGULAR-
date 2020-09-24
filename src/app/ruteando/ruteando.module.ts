@@ -25,6 +25,7 @@ import { PptComponent } from '../componentes/ppt/ppt.component';
 import { AnagramaComponent } from '../componentes/anagrama/anagrama.component';
 import { TatetiComponent } from '../componentes/tateti/tateti.component';
 import { MemotestComponent } from '../componentes/memotest/memotest.component';
+import { AhorcadoComponent } from '../componentes/ahorcado/ahorcado.component';
 
 
 // declaro donde quiero que se dirija
@@ -50,7 +51,8 @@ children:
       {path: 'Anagrama', component: AnagramaComponent},
       {path: 'Agilidad' , component: AgilidadAritmeticaComponent},
       {path: 'Tateti', component: TatetiComponent},
-      {path: 'Memotest', component: MemotestComponent}]
+      {path: 'Memotest', component: MemotestComponent},
+      {path: 'Ahorcado', component: AhorcadoComponent}]
 },
 {path: '**' , component: ErrorComponent},
 {path: 'error' , component: ErrorComponent}];

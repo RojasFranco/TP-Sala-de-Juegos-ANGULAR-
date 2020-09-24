@@ -1,4 +1,6 @@
-.titulo{
+.row{
     background-color: rgb(15, 15, 107);
     color: white;
+    display: flex;
+    align-items: center;
 }

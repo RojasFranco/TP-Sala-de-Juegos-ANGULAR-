@@ -6,27 +6,33 @@
     <p>El Gobierno Nacional no puede garantizar que la transmisión de información por parte de los Usuarios sea completamente segura. El Usuario asume este riesgo.</p>
    
   </div>
-  <strong><p>No leer lo anterior, es solo un ejemplo sacado de https://www.argentina.gob.ar/terminos-y-condiciones </p></strong>
-  <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Acepto</button>
-  <button  class="cancelbtn"  routerLink="/Principal" style="width:auto;">No acepto</button>
+
+  <div class="mx-3">
+    <strong><p>No leer lo anterior, es solo un ejemplo sacado de https://www.argentina.gob.ar/terminos-y-condiciones </p></strong>
+    <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-success">Acepto</button>
+    <button  class="cancelbtn"  routerLink="/Principal" class="btn btn-danger ml-3">No acepto</button>
+  </div>
   <div id="id01" class="modal">
     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
     <form class="modal-content animate" >
       <div class="container">
         <label><b>Email</b></label>
-        <input type="text" placeholder="Ingresa tu correo" name="email" required>
+        <input type="text" placeholder="Ingresa tu correo..." [(ngModel)]="usuario.correo" name="email" class="form-control" required>
   
         <label><b>Clave</b></label>
-        <input type="password" placeholder="Aca la clave" name="psw" required>
+        <input type="password" placeholder="Ingrese su clave..." [(ngModel)]="usuario.clave" name="psw"  class="form-control" required>
   
         <label><b>Repita la clave</b></label>
-        <input type="password" placeholder="Aca repeti la misa clave  de arriba" name="psw-repeat" required>
+        <input type="password" autocomplete="true" placeholder="Repita su clave..." [(ngModel)]="repetidorClave" class="form-control" name="psw-repeat" required>
+        <h3 class="hError" *ngIf="repetidorClave && usuario.clave!=repetidorClave">
+          Las contraseñas deben ser iguales
+        </h3>
         <input type="checkbox" checked="checked">Recordar mis datos
         <p>creando la cuenta aceptando los<a  onclick="document.getElementById('id01').style.display='none'"  >Terminos y condiciones</a>.</p>
   
-        <div class="clearfix">
-          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Me arrepenti</button>
-          <button type="submit" class="signupbtn">Registrarme</button>
+        <div class="row">
+          <button type="button" onclick="document.getElementById('id01').style.display='none'" class="btn btn-danger col-5">Cancelar</button>
+          <button type="submit" (click)="Registrar()" class="btn btn-info offset-2 col-5">Registrarme</button>
         </div>
       </div>
     </form>

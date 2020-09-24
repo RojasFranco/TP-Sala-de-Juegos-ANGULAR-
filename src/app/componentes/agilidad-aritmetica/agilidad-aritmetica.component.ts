@@ -20,6 +20,7 @@ export class AgilidadAritmeticaComponent implements OnInit {
   operadores: Array<string>;  
   operador: string;
   solucion: number;
+  enJuego: boolean=false;
   private subscription: Subscription;
   ngOnInit() {
   }
@@ -36,6 +37,8 @@ export class AgilidadAritmeticaComponent implements OnInit {
     this.ocultarVerificar=false;
     this.generarCuenta();
     this.nuevoJuego.numeroIngresado=null;
+    this.nuevoJuego.gano = false;
+    this.enJuego=true;
    this.repetidor = setInterval(()=>{ 
       
       this.Tiempo--;
@@ -52,6 +55,7 @@ export class AgilidadAritmeticaComponent implements OnInit {
   verificar()
   {
     this.ocultarVerificar=true;
+    this.enJuego=false;
     if(parseInt(this.nuevoJuego.numeroIngresado)==this.solucion){
       this.nuevoJuego.gano = true;
     }

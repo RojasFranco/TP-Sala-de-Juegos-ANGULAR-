@@ -34,3 +34,7 @@ cursor: pointer;
 background-color: rgb(69, 63, 139);
 color: white;
 }
+
+li a{
+    color: white;
+}

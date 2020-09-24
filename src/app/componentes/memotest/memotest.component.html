@@ -1,1 +1,22 @@
-<p>memotest works!</p>
+<div style="text-align:center">
+    <h2 class="mt-2">
+      {{nuevoJuego.nombre}}!
+    </h2>
+</div>
+
+<div class="container text-center">
+    <button (click)="Jugar()" *ngIf="!estaEnJuego" mat-fab color="primary">Jugar</button>
+
+    <mat-grid-list *ngIf="estaEnJuego" cols="4" rowHeight="2:1">
+        <mat-grid-tile *ngFor="let animal of tableroAnimales; index as i" (click)="seleccionar(i)">
+            <img *ngIf="animal.seleccionado; else aunNoCargo" [src]="animal.src" alt="" height="100%" width="100%">
+            <ng-template #aunNoCargo>
+                <img src="../../../assets/imagenes/ParaMemotest/noElegido.jpg" alt="" height="100%" width="100%">
+            </ng-template>            
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <p *ngIf="mostrarError" class="bg-danger mt-3">Esa posicion ya fue elegida, elija otra</p>
+    <h2 *ngIf="nuevoJuego.gano" class="text-center bg-success my-3">GANASTE</h2>
+    <button *ngIf="juegoTermino" (click)="CrearJuegoPosiciones()" mat-raised-button color="primary">Jugar nuevamente</button>
+</div>

@@ -1,8 +1,13 @@
-
 form {
     border: 10px solid #f1f1f1;
-    padding: 10px;
-    background:gray;
+    /* padding: 10px;        */
+    background:rgb(158, 190, 216);
+    border-radius: 15px;
+    /* color: white; */
+}
+
+.container{
+    width: 60vw;
 }
 
 input[type=text], input[type=password] {
@@ -40,16 +45,13 @@ button:hover {
 }
 .imgcontainer {
     text-align: center;
-    margin: 24px 0 12px 0;
+    /* margin: 24px 0 12px 0; */
+    height: 300px;    
 }
 
 img.avatar {
     width: 40%;
     border-radius: 50%;
-}
-
-.container {
-    padding: 16px;
 }
 
 span.psw {

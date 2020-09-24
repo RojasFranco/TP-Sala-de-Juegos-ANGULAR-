@@ -2,7 +2,8 @@
 form {
     border: 10px solid #f1f1f1;
     padding: 10px;
-    background:gray;
+    background:rgb(3, 2, 99);
+    color: white;
 }
 
 input[type=text], input[type=password] {

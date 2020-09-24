@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import {Subscription} from "rxjs";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
+import { AutenticacionService } from '../../servicios/autenticacion.service';
+import { Usuario } from '../../clases/usuario';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,8 +13,9 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 export class LoginComponent implements OnInit {
 
   private subscription: Subscription;
-  usuario = '';
-  clave= '';
+  // usuario = '';
+  // clave= '';
+  usuario: Usuario;
   progreso: number;
   progresoMensaje="esperando..."; 
   logeando=true;
@@ -22,25 +25,54 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private auth: AutenticacionService) {
       this.progreso=0;
       this.ProgresoDeAncho="0%";
+    this.usuario = new Usuario();
 
   }
 
   ngOnInit() {
   }
 
-  Entrar() {
-    if (this.usuario === 'admin' && this.clave === 'admin') {
-      this.router.navigate(['/Principal']);
+  async Entrar() {
+    if(this.usuario.correo && this.usuario.clave){
+      try{
+        await this.auth.LoguearUsuario(this.usuario);
+        this.router.navigate(['Principal']);
+      }
+      catch(error){
+        switch (error.code) { // TO DO CAMBIAR ALERTS
+          case 'auth/invalid-email':
+            alert("Ingrese un correo valido");
+            break;
+          case 'auth/user-not-found':
+            alert("Este correo no esta registrado, registrese");
+            break;
+          case 'auth/wrong-password':
+            alert("La contraseña no es correcta");
+            break;
+          default:
+            alert("Error inesperado: "+error.message);
+            break;
+        }
+        this.logeando = true;
+      }
+    }
+    else{
+      this.logeando = true;
+      console.log("Complete los campos");
     }
   }
+
+
   MoverBarraDeProgreso() {
-    
+    this.progreso=0;
+    this.ProgresoDeAncho="0%";
     this.logeando=false;
     this.clase="progress-bar progress-bar-danger progress-bar-striped active";
-    this.progresoMensaje="NSA spy..."; 
+    this.progresoMensaje="Verificando..."; 
     let timer = TimerObservable.create(200, 50);
     this.subscription = timer.subscribe(t => {
       console.log("inicio");
@@ -48,24 +80,24 @@ export class LoginComponent implements OnInit {
       this.ProgresoDeAncho=this.progreso+20+"%";
       switch (this.progreso) {
         case 15:
-        this.clase="progress-bar progress-bar-warning progress-bar-striped active";
-        this.progresoMensaje="Verificando ADN..."; 
+        this.clase="progress-bar bg-info progress-bar-striped active";
+        this.progresoMensaje="Verificando su cuenta..."; 
           break;
         case 30:
-          this.clase="progress-bar progress-bar-Info progress-bar-striped active";
-          this.progresoMensaje="Adjustando encriptación.."; 
+          this.clase="progress-bar bg-danger progress-bar-striped active";
+          // this.progresoMensaje="Adjustando encriptación.."; 
           break;
           case 60:
-          this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Recompilando Info del dispositivo..";
+          this.clase="progress-bar bg-danger progress-bar-striped active";
+          this.progresoMensaje="Cargando datos..";
           break;
           case 75:
-          this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Recompilando claves facebook, gmail, chats..";
+          this.clase="progress-bar bg-success progress-bar-striped active";
+          this.progresoMensaje="Cargando juegos..";
           break;
           case 85:
-          this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Instalando KeyLogger..";
+          this.clase="progress-bar bg-success progress-bar-striped active";
+          this.progresoMensaje="Instalando..";
           break;
           
         case 100:
@@ -75,7 +107,11 @@ export class LoginComponent implements OnInit {
           break;
       }     
     });
-    //this.logeando=true;
+    // this.logeando=true;
+  }
+
+  Volver(){
+    this.router.navigate(["Principal"]);
   }
 
 }
