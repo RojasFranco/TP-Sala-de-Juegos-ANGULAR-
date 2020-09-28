@@ -21,10 +21,18 @@
         </mat-grid-list>
     </div>
 
-    <p *ngIf="mostrarError && intentos>0" class="bg-danger mt-3">Error, te quedan {{intentos}} intento/s</p>
-    <p *ngIf="perdio" class="bg-danger mt-3">Perdiste, la palabra era {{ palabraSecretaSeparada.join('') }}</p>
+    <!-- <p *ngIf="mostrarError && intentos>0" class="bg-danger mt-3">Error, te quedan {{intentos}} intento/s</p> -->
+    <!-- <p *ngIf="perdio" class="bg-danger mt-3">Perdiste, la palabra era {{ palabraSecretaSeparada.join('') }}</p> -->
+    <div class="alert alert-danger mt-3" *ngIf="mostrarError && intentos>0">
+        Error, te quedan {{intentos}} intento/s
+    </div>
+    <div class="alert alert-danger mt-3" *ngIf="perdio" >
+        Perdiste, la palabra era {{ palabraSecretaSeparada.join('') }}
+    </div>
 
-
-    <p *ngIf="nuevoJuego.gano" class="bg-success mt-3">Ganaste</p>
+    <div class="alert alert-success mt-3" *ngIf="nuevoJuego.gano">
+        Ganaste, sumas 5 puntos a tu historial
+    </div>
+    <!-- <p *ngIf="nuevoJuego.gano" class="bg-success mt-3">Ganaste</p> -->
     <button *ngIf="nuevoJuego.gano || perdio" (click)="GenerarPalabra()" class="btn btn-primary">Jugar Nuevamente</button>
 </div>

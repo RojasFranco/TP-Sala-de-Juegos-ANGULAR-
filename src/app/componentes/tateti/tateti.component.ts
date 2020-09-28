@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { JuegoTateti } from '../../clases/juego-tateti';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-tateti',
@@ -15,8 +18,12 @@ export class TatetiComponent implements OnInit {
   posiciones: Array<any>;
   mostrarErrorAlElegirPosicion: boolean = false;
   juegoTermino: boolean = false;
+  classAlert: string;
+  mensajeResultado: string;
 
-  constructor() {
+  constructor(private fbRegistroUsers: RegistroJugadoresService,
+    private fbListadoJugadas: RegistroResultadosJuegosService,
+    private auth: AutenticacionService) {
     this.nuevoJuego = new JuegoTateti("TaTeTi");
     this.posiciones = ['-', '-','-','-','-','-','-','-','-']; // 9 posiciones
    }
@@ -32,21 +39,27 @@ export class TatetiComponent implements OnInit {
 
   seleccionar(posicionSeleccionada){
     if(this.juegoTermino){
-      alert("El juego termino, comience nuevamente");
+      // alert("El juego termino, comience nuevamente");
+      this.mensajeResultado = "El juego termino, comience nuevamente";
     }
     else{
       this.mostrarErrorAlElegirPosicion = false;
       if(this.posiciones[posicionSeleccionada]=="-"){
         this.posiciones[posicionSeleccionada] = "X";      
         if(this.AlgunoGano()){
-          this.MostrarGanador("jugador");
+          // this.MostrarGanador("jugador");
           this.juegoTermino=true;
+          this.classAlert = "alert alert-success";
+          this.mensajeResultado = "Ganaste!! Sumas 5 puntos a tu historial";
+          this.ActualizarInformacionBD(true);
         }
         else{
           this.ElegirOpcionMaquina();
           if(this.Empataron()){
-            this.MostrarGanador("ninguno, fue empate");
+            // this.MostrarGanador("ninguno, fue empate");
             this.juegoTermino = true;
+            this.classAlert = "alert alert-secondary";
+            this.mensajeResultado = "Empataron";
           }
         }      
       }
@@ -71,8 +84,11 @@ export class TatetiComponent implements OnInit {
         if(this.posiciones[posicion]=="-"){
           this.posiciones[posicion] = "O";
           if(this.AlgunoGano()){
-            this.MostrarGanador("maquina");
+            // this.MostrarGanador("maquina");
             this.juegoTermino=true;
+            this.classAlert = "alert alert-danger";
+            this.mensajeResultado = "Perdiste";
+            this.ActualizarInformacionBD(false);
           }
           aunNoEligio=false;
         }
@@ -115,5 +131,16 @@ export class TatetiComponent implements OnInit {
       }
     });
     return empataron;
+  }
+
+  async ActualizarInformacionBD(gano: boolean){
+    let usuario = await this.auth.ObtenerLogueado();        
+    if(gano){
+      this.fbRegistroUsers.ActualizarPuntaje(usuario.email, 5);
+      this.fbListadoJugadas.AgregarResultadoSinID("Tateti", usuario.email, "Gano");
+    }
+    else{
+      this.fbListadoJugadas.AgregarResultadoSinID("Tateti", usuario.email, "Perdio");
+    }
   }
 }

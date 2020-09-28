@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { JuegoAhorcado } from '../../clases/juego-ahorcado';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
+
 
 @Component({
   selector: 'app-ahorcado',
@@ -19,7 +23,9 @@ export class AhorcadoComponent implements OnInit {
   mostrarPerdio: boolean = false;
   mostrarError: boolean = false;
   perdio : boolean = false;
-  constructor() {
+  constructor(private fbRegistroUsers: RegistroJugadoresService,
+    private fbListadoJugadas: RegistroResultadosJuegosService,
+    private auth: AutenticacionService) {
     this.nuevoJuego = new JuegoAhorcado("Ahorcado");
     this.abecedario = "abcdefghijklmnopqrstuvwxyz";
     this.letrasDisponibles = this.abecedario.toLocaleUpperCase().split('');
@@ -48,7 +54,7 @@ export class AhorcadoComponent implements OnInit {
     console.log(this.palabraEnFormacion);
   }
 
-  ElegirLetra(letraActual){
+  async ElegirLetra(letraActual){
     let letraCoincide = false;
     this.letraElegida = letraActual;
     for (let index = 0; index < this.palabraSecretaSeparada.length; index++) {
@@ -62,6 +68,9 @@ export class AhorcadoComponent implements OnInit {
       this.mostrarError = false;
       if(this.VerificarSiGano()){
         this.nuevoJuego.gano = true;
+        let usuario = await this.auth.ObtenerLogueado();
+        this.fbRegistroUsers.ActualizarPuntaje(usuario.email, 5);
+        this.fbListadoJugadas.AgregarResultadoSinID("Ahorcado",usuario.email,"Gano");
       }
     }
     else{
@@ -69,6 +78,8 @@ export class AhorcadoComponent implements OnInit {
       this.mostrarError = true;
       if(this.intentos==0){
         this.perdio = true;
+        let usuario = await this.auth.ObtenerLogueado();
+        this.fbListadoJugadas.AgregarResultadoSinID("Ahorcado",usuario.email,"Perdio");
       }
     }
 

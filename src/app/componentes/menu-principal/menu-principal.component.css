@@ -1,0 +1,27 @@
+.imagenDeMenu{
+    width: 80px;
+    height: 70px;
+    }
+    
+    .hero-text {
+        text-align: center;
+        height: 20px;
+        /* position: absolute; */
+        /* top: 50%; */
+        /* left: 50%; */
+        /* transform: translate(-50%, -50%); */
+        color: #1b0e49;
+        }
+    
+    .media-body{
+        margin-left: 20px;
+    }
+    
+    .itemsElegir{
+        background-color: #1b0e49;
+    }
+    
+    .itemsElegir:hover{
+        background-color: #a2cbe2;
+        color: black;
+    }

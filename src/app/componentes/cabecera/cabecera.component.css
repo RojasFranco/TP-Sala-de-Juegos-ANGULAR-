@@ -35,6 +35,10 @@ background-color: rgb(69, 63, 139);
 color: white;
 }
 
-li a{
+li{
     color: white;
+}
+
+li:hover{
+    color: rgb(149, 149, 221);
 }

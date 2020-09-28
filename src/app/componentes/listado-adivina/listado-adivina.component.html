@@ -1,0 +1,19 @@
+<div class="container">
+    <table class="table table-dark mt-3 text-center">
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Juego</th>        
+            <th>Resultado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let resultado of listadoResultados">
+            <td>{{resultado.Jugador}} </td>
+            <td>{{resultado.Juego}} </td> 
+            <td>{{ resultado.Resultado }}</td>
+          </tr>
+         
+        </tbody>
+      </table>
+</div>

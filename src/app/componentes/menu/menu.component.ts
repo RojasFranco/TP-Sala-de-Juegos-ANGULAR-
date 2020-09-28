@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +10,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 export class MenuComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private auth: AutenticacionService) { }
 
   ngOnInit() {
   }
@@ -40,7 +42,14 @@ export class MenuComponent implements OnInit {
       case 'Ahorcado':
          this.router.navigate(['/Juegos/Ahorcado']);
          break;                  
+      case 'ppt':
+          this.router.navigate(['/Juegos/PiedraPapelTijera']);
+          break;          
     }
+  }
+
+  async CerrarSesion(){
+    await this.auth.Desloguear();
   }
 
 }

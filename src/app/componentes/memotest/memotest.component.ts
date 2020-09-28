@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { JuegoMemotest } from '../../clases/juego-memotest';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-memotest',
@@ -19,12 +22,18 @@ export class MemotestComponent implements OnInit {
   mostrarError: boolean = false;
   cantidadNecesariaParaGanar = 12;
   juegoTermino: boolean = false;
+  cantidadIntentos:number;
+  perdio: boolean = false;
+  mostrarIntentos: boolean = false;
 
   // tablero: Array<any>;
-  constructor() { 
+  constructor(private fbRegistroUsers: RegistroJugadoresService,
+    private fbListadoJugadas: RegistroResultadosJuegosService,
+    private auth: AutenticacionService) { 
     this.nuevoJuego = new JuegoMemotest("Memotest");
     this.animalesDisponibles = this.nuevoJuego.DevolverAnimales();
     this.cantidadSeleccionados = 0;
+    this.cantidadIntentos = 5;
   }
 
   ngOnInit(): void {
@@ -41,6 +50,8 @@ export class MemotestComponent implements OnInit {
     this.cantidadNecesariaParaGanar = 12;
     this.cantidadSeleccionados = 0;
     this.mostrarError = false;
+    this.estaEnJuego = true;
+    this.cantidadIntentos = 5;
     this.tableroAnimales = [...this.animalesDisponibles];
     this.tableroAnimales.forEach(element => {
       element.seleccionado = false;
@@ -57,6 +68,7 @@ export class MemotestComponent implements OnInit {
   }
 
   seleccionar(posicionElegida){    
+    this.mostrarIntentos = false;
     if(this.tableroAnimales[posicionElegida].seleccionado){
       this.mostrarError = true;
     }    
@@ -76,10 +88,19 @@ export class MemotestComponent implements OnInit {
           // JUEGO TERMINADO
           this.nuevoJuego.gano=true;
           this.juegoTermino = true;
+          this.ActualizarInformacionBD(true);
         }
       }
       else{
         this.OcultarSeleccionados();
+        this.cantidadIntentos-=1;
+        this.mostrarIntentos = true;
+        if(this.cantidadIntentos==0){
+          this.juegoTermino = true;
+          this.perdio = true;
+          this.estaEnJuego = false;
+          this.ActualizarInformacionBD(false);
+        }
       }
       this.cantidadSeleccionados = 0;
     }
@@ -103,5 +124,15 @@ export class MemotestComponent implements OnInit {
     this.segundoElegido.seleccionado = false;
   }
 
+  async ActualizarInformacionBD(gano: boolean){
+    let usuario = await this.auth.ObtenerLogueado();        
+    if(gano){
+      this.fbRegistroUsers.ActualizarPuntaje(usuario.email, 5);
+      this.fbListadoJugadas.AgregarResultadoSinID("Memotest", usuario.email, "Gano");
+    }
+    else{
+      this.fbListadoJugadas.AgregarResultadoSinID("Memotest", usuario.email, "Perdio");
+    }
+  }
   
 }

@@ -64,6 +64,12 @@ import { AhorcadoComponent } from './componentes/ahorcado/ahorcado.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { environment } from '../environments/environment';
+import { MenuPrincipalComponent } from './componentes/menu-principal/menu-principal.component';
+
+import { AngularFirestore } from '@angular/fire/firestore';
+import { ListadoAdivinaComponent } from './componentes/listado-adivina/listado-adivina.component';
+// import { ListadoAritmeticaComponent } from './componentes/listado-aritmetica/listado-aritmetica.component';
+// import { ListadoAhorcadoComponent } from './componentes/listado-ahorcado/listado-ahorcado.component';
 
 
 @NgModule({
@@ -94,7 +100,11 @@ import { environment } from '../environments/environment';
     PptComponent,
     TatetiComponent,
     MemotestComponent,
-    AhorcadoComponent
+    AhorcadoComponent,
+    MenuPrincipalComponent,
+    ListadoAdivinaComponent,
+    // ListadoAritmeticaComponent,
+    // ListadoAhorcadoComponent
   ],
   imports: [
     BrowserModule,
@@ -107,6 +117,7 @@ import { environment } from '../environments/environment';
     MatGridListModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    // AngularFirestore,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB6f8x4IjRlesQ3oETc6BXYQHVRTOlY3Ys'
     }),

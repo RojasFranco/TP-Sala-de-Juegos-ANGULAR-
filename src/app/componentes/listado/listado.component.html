@@ -1,14 +1,18 @@
+<div class="container-fluid mt-2 text-center">
+  <button class="btn btn-dark" routerLink= "/menu-principal">Volver</button>
+  <button class="btn btn-dark mx-3" (click)="Cargar('Adivina el nro')" >Adivina Nro</button>
+  <button class="btn btn-dark" (click)="Cargar('Agilidad Aritmetica')">Agilidad aritmetica</button>
+  <button class="btn btn-dark mx-3" (click)="Cargar('Ahorcado')">Ahorcado</button>
+  <button class="btn btn-dark" (click)="Cargar('Anagrama')">Anagrama</button>
+  <button class="btn btn-dark mx-3" (click)="Cargar('Memotest')">Memotest</button>
+  <button class="btn btn-dark" (click)="Cargar('Tateti')">Tateti</button>
+  <button class="btn btn-dark mx-3" (click)="Cargar('Piedra Papel Tijera')">Piedra papel tijera</button>
+  <button class="btn btn-dark " (click)="CargarResultadosPorUsuario()" >Mis Resultados</button>
+  <button class="btn btn-dark mx-3" (click)="Cargar('todos')" >Todos</button>
+</div>
 
-<!--input type="button" (click)="llamaService()" class="btn btn-info" value="Pulsame" > 
-<input type="button" (click)="llamaServicePromesa()" class="btn btn-info" value="Pulsame Promesa" --> 
-
-<!-- Centered Pills -->
-<ul class="nav nav-pills nav-justified">
-    <li class="active"><a routerLink="/Principal">Sala de Juegos</a></li>
-    <li><a (click)="llamaService()">Servicio</a></li>
-    <li><a (click)="llamaServicePromesa()">Serv Promesa</a></li>
-    <li><a (click)="llamaServicePromesa()">Serv observable</a></li>
-  </ul>
+<!-- <router-outlet></router-outlet> -->
   
-<app-listado-de-resultados [listado]="listadoParaCompartir"> </app-listado-de-resultados>
+<!-- <app-listado-de-resultados [listado]="listadoParaCompartir"> </app-listado-de-resultados> -->
 
+<app-listado-de-resultados [listadoResultados] = "listadoPedido"></app-listado-de-resultados>

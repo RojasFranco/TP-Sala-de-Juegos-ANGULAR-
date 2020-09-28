@@ -5,8 +5,13 @@
       <a href="https://github.com/RojasFranco"target="_blank">en GitHub <i class="fa fa-github"></i></a>
       <a  routerLink="/QuienSoy" >Quien Soy? <i class="fa fa-user"></i></a>
   </div>
-  <ul class="nav navbar-nav navbar-right p-2" >
-    <li><a  routerLink="/Login"><i class="fas fa-user mr-2"></i> Ingresar</a></li>      
-    <li><a routerLink="/Registro"><i class="fas fa-user-plus mr-2"></i>Registrarse</a></li>          
+  <ul *ngIf="!hayUsuarioLogueado" class="nav navbar-nav navbar-right p-2" >
+    <li (click)="Ingresar()"><i class="fas fa-user mr-2"></i>Ingresar</li>      
+    <li (click)="Registrar()"> <i class="fas fa-user-plus mr-2"></i>Registrarse</li>
+  </ul>
+
+  <!-- // CAMBIAR -->
+  <ul *ngIf="hayUsuarioLogueado" class="nav navbar-nav navbar-right p-2" >  
+    <li (click)="Desloguear()"><i class="fas fa-user-times mr-2"></i>Cerrar sesion </li>
   </ul>
 </div>

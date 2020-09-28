@@ -3,6 +3,9 @@ import { JuegoAgilidad } from '../../clases/juego-agilidad'
 
 import {Subscription} from "rxjs";
 import {TimerObservable} from "rxjs/observable/TimerObservable";
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 @Component({
   selector: 'app-agilidad-aritmetica',
   templateUrl: './agilidad-aritmetica.component.html',
@@ -21,12 +24,15 @@ export class AgilidadAritmeticaComponent implements OnInit {
   operador: string;
   solucion: number;
   enJuego: boolean=false;
+  perdio: boolean = false;
   private subscription: Subscription;
   ngOnInit() {
   }
-   constructor() {
+   constructor(private fbRegistroUsers: RegistroJugadoresService,
+     private fbListadoJugadas: RegistroResultadosJuegosService,
+     private auth: AutenticacionService) {
      this.ocultarVerificar=true;
-     this.Tiempo=5; 
+     this.Tiempo=8; 
     this.nuevoJuego = new JuegoAgilidad();
     this.operadores = new Array<string>();
     this.operadores.push("+","-","*","/");
@@ -39,6 +45,7 @@ export class AgilidadAritmeticaComponent implements OnInit {
     this.nuevoJuego.numeroIngresado=null;
     this.nuevoJuego.gano = false;
     this.enJuego=true;
+    this.perdio = false;
    this.repetidor = setInterval(()=>{ 
       
       this.Tiempo--;
@@ -47,20 +54,28 @@ export class AgilidadAritmeticaComponent implements OnInit {
         clearInterval(this.repetidor);
         this.verificar();
         this.ocultarVerificar=true;
-        this.Tiempo=5;
+        this.Tiempo=8;
       }
       }, 900);
 
   }
-  verificar()
+  async verificar()
   {
     this.ocultarVerificar=true;
     this.enJuego=false;
     if(parseInt(this.nuevoJuego.numeroIngresado)==this.solucion){
       this.nuevoJuego.gano = true;
+      let usuario = await this.auth.ObtenerLogueado();
+      this.fbRegistroUsers.ActualizarPuntaje(usuario.email, 5);
+      this.fbListadoJugadas.AgregarResultadoSinID("Agilidad Aritmetica", usuario.email, "Gano");
+    }
+    else{
+      let usuario = await this.auth.ObtenerLogueado();
+      this.fbListadoJugadas.AgregarResultadoSinID("Agilidad Aritmetica", usuario.email, "Perdio");
+      this.perdio = true;
     }
     clearInterval(this.repetidor);
-    this.Tiempo=5;
+    this.Tiempo=8;
 
    
   }  

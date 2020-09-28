@@ -26,6 +26,6 @@ export class AutenticacionService {
 
   ObtenerLogueado(){
     //  TO DO
-    // this.auth.currentUser;
+    return this.auth.currentUser;
   }
 }

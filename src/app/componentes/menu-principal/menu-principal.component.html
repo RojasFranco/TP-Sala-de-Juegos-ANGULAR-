@@ -1,8 +1,6 @@
-<app-cabecera [hayUsuarioLogueado]=usuarioLogeado (eventoUsuario)="AccionUsuario($event)"></app-cabecera>
+<app-cabecera [hayUsuarioLogueado]="true"></app-cabecera>
 
- 
-<!-- <div class="container" *ngIf="usuarioLogeado; else usuarioNoLogueado">
-
+<div class="container">
     <ul class="list-group">
         <li class="list-group-item ">
            
@@ -25,7 +23,7 @@
           </a>
         </li>
         <li class="list-group-item itemsElegir">
-            <a routerLink="/Listado">
+            <a routerLink="/Listado-Resultados">
               <div class="media">
                   <div class="media-left">
                       <img src="./assets/imagenes/listado.jpg" class="media-object imagenDeMenu" >
@@ -69,21 +67,4 @@
        
         
       </ul>
-</div> -->
-
-<!-- <ng-template #usuarioNoLogueado> -->
-  <div class="text-center mt-4">
-    <div *ngIf="quiereloguearse">
-      <app-login (emitirUsuarioLogueado)="LogeoUsuario($event)" (eventoQuiereVolver) =" VolverAMenu($event)"></app-login>
-    </div>
-
-    <div *ngIf="quiereRegistrarse" >
-      <app-registro (eventoQuiereVolver) =" VolverAMenu($event)" ></app-registro>
-    </div>
-
-    <h2 *ngIf="!quiereloguearse && !quiereRegistrarse">
-      Bienvenido a la sala de Juegos, para comenzar inicie su cuenta o registrese.
-    </h2>
-  </div>
-  
-<!-- </ng-template> -->
+</div>

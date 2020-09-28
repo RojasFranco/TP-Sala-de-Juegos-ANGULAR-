@@ -26,6 +26,8 @@ import { AnagramaComponent } from '../componentes/anagrama/anagrama.component';
 import { TatetiComponent } from '../componentes/tateti/tateti.component';
 import { MemotestComponent } from '../componentes/memotest/memotest.component';
 import { AhorcadoComponent } from '../componentes/ahorcado/ahorcado.component';
+import { MenuPrincipalComponent } from '../componentes/menu-principal/menu-principal.component';
+import { ListadoAdivinaComponent } from '../componentes/listado-adivina/listado-adivina.component';
 
 
 // declaro donde quiero que se dirija
@@ -37,9 +39,15 @@ const MiRuteo = [
 {path: 'QuienSoy' , component: QuienSoyComponent},
 {path: 'Registro' , component: RegistroComponent},
 {path: 'Principal' , component: PrincipalComponent},
-{path: 'Listado' , component: ListadoComponent},
+// {path:'Listado-Resultados', component: ListadoDeResultadosComponent},
 {path: 'Paises' , component: ListadoDePaisesComponent},
-
+{path:'menu-principal', component: MenuPrincipalComponent},
+// {path: 'Listado-Resultados', component: ListadoComponent,
+//     children: [
+//     { path: '', component: ListadoDeResultadosComponent},
+//      {path: 'listado-adivina', component: ListadoAdivinaComponent}
+//     ]},
+{path: 'Listado-Resultados', component: ListadoComponent},
 { path: 'Juegos' ,
 component: JuegosComponent ,
 children:

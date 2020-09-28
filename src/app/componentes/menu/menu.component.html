@@ -32,23 +32,21 @@
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">            
             <i class="fab fa-accusoft"></i>
           </button>          
-          <a class="navbar-brand ml-2" routerLink="/Principal">Inicio</a>
+          <a class="navbar-brand ml-2" routerLink="/menu-principal">Inicio</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li class="active"><a routerLink="/Juegos">Menú de Juegos</a></li>
                 <li><a data-toggle="tooltip" title="Hooray!" (click)="Juego('Adivina')">Adivina</a></li>
                 <li><a  (click)="Juego('Agilidad')">Agilidad</a></li>
-                <li><a  (click)="Juego('AdivinaMasListado')">Adivina+listado</a></li>
-                <li><a  (click)="Juego('AgilidadaMasListado')">Agilidad+listado</a></li>
                 <li><a  (click)="Juego('Tateti')">Tateti</a></li>
                 <li><a  (click)="Juego('Anagrama')">Anagrama</a></li>
                 <li><a  (click)="Juego('Memotest')">Memotest</a></li>
                 <li><a  (click)="Juego('Ahorcado')">Ahorcado</a></li>
+                <li><a  (click)="Juego('ppt')">Piedra Papel Tijera</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Mis Datos</a></li>
-                  <li><a href="/Login"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                  <li (click)="CerrarSesion()"><a href="/Principal"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                 </ul>
         </div>
       </div>

@@ -13,6 +13,11 @@
     <p *ngIf="mostrarErrorAlElegirPosicion" class="alert-danger my-3">Esa posicion ya esta ocupada, elija otra</p>
 </div>
 
+<div [ngClass]="classAlert" class="text-center" *ngIf="juegoTermino">
+  {{ mensajeResultado }}
+</div>
+
+
 <div class="container text-center mt-3">
   <button *ngIf="juegoTermino" mat-raised-button color="primary" (click)="GenerarTablero()">Jugar de nuevo</button>
 </div>

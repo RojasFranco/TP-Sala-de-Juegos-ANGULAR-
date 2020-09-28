@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AutenticacionService } from '../../servicios/autenticacion.service'; //'src/app/servicios/autenticacion.service';
 import { Usuario } from '../../clases/usuario';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
 //para poder hacer las validaciones
 //import { Validators, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 @Component({
@@ -18,7 +19,13 @@ export class RegistroComponent implements OnInit {
   });*/
   usuario: Usuario;
   repetidorClave: string;
-  constructor( private router: Router, private auth: AutenticacionService) { 
+  mensajeError: string;
+  mostrarError: boolean = false;
+  claseAlert: string;
+  @Output() eventoQuiereVolver: EventEmitter<any> = new EventEmitter();
+  constructor( private router: Router, 
+               private auth: AutenticacionService,
+               private registroFB: RegistroJugadoresService) { 
     this.usuario = new Usuario();
   }
 
@@ -29,33 +36,49 @@ export class RegistroComponent implements OnInit {
 
   async Registrar(){
     if(!this.usuario.correo || !this.usuario.clave || !this.repetidorClave){
-      console.log("Complete los campos");
+      this.mostrarError = true;
+      this.claseAlert= "alert alert-danger";
+      this.mensajeError = "Complete los campos";
     }
     else{
       if(this.usuario.clave == this.repetidorClave){
         try{
           await this.auth.RegistrarUsuario(this.usuario)
-          console.log("Registrado exitosamente");
-          this.router.navigate(["Login"]);
+          this.claseAlert= "alert alert-success";
+          this.mensajeError = "Se ha registraso exitosamente";
+          this.mostrarError = true;
+          this.registroFB.GuardarJugador(this.usuario.correo, 0);
+          // console.log("Registrado exitosamente");
+          // this.router.navigate(["Login"]);
+          setTimeout(() => {
+            this.eventoQuiereVolver.emit();
+          }, 3000);          
+
         }
         catch(error){
+          this.mostrarError = true;
+          this.claseAlert= "alert alert-danger";
           switch (error.code) {
             case 'auth/invalid-email':
-              alert("Ingrese un correo electronico valido");
+              this.mensajeError = "Ingrese un correo electronico valido";
               break;
             case 'auth/weak-password':
-              alert("La contraseña debe tener al menos 6 caracteres");
+              this.mensajeError = "La contraseña debe tener al menos 6 caracteres";
               break;
             case 'auth/email-already-in-use':
-              alert("Este mail ya esta registrado");
+              this.mensajeError = "Este mail ya esta registrado, use otro";
               break;
             default:
-              alert("Error inesperado: "+error.message);
+              this.mensajeError = "Error inesperado: "+error.message;
               break;
           }
         }
       }
     }
+  }
+
+  Volver(){
+    this.eventoQuiereVolver.emit();
   }
 
 }

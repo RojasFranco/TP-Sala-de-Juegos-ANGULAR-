@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
 import { JuegoServiceService } from '../../servicios/juego-service.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-listado',
@@ -7,27 +9,40 @@ import { JuegoServiceService } from '../../servicios/juego-service.service';
   styleUrls: ['./listado.component.css']
 })
 export class ListadoComponent implements OnInit {
-  public listadoParaCompartir: Array<any>;
-   miServicioJuego:JuegoServiceService
+  // public listadoParaCompartir: Array<any>;
+  //  miServicioJuego:JuegoServiceService
 
-  constructor(servicioJuego:JuegoServiceService) {
-    this.miServicioJuego = servicioJuego;
-    
+  listadoPedido: Array<any>;
+  jugarACargar: string = "todos";
+  constructor(private fbListadoResultados: RegistroResultadosJuegosService, private auth: AutenticacionService) {
+    this.listadoPedido = new Array<any>();
+    this.CargarResultados();
   }
   
   ngOnInit() {
     
   }
 
-  llamaService(){
-    console.log("llamaService");
-    this.listadoParaCompartir= this.miServicioJuego.listar();
+  Cargar(juegoPedido){
+    this.jugarACargar = juegoPedido;
+    this.CargarResultados();
   }
 
-  llamaServicePromesa(){
-    console.log("llamaServicePromesa");
-    this.miServicioJuego.listarPromesa().then((listado) => {
-        this.listadoParaCompartir = listado;
-    });
+  CargarResultados(){
+    if(this.jugarACargar=="todos"){
+      this.fbListadoResultados.ObtenerTodosLosResultados().subscribe(rta=>{
+        rta.forEach(rdo=>{
+          this.listadoPedido.push(rdo.data());
+        })
+      })
+    }
+    else{
+      this.listadoPedido = this.fbListadoResultados.ObtenerTodosResultadosDelJuego(this.jugarACargar);
+    }
+  }
+
+  async CargarResultadosPorUsuario(){
+    let usuario = await this.auth.ObtenerLogueado();
+    this.listadoPedido = this.fbListadoResultados.ObtenerResultadosDelUsuario(usuario.email);
   }
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Jugador } from '../../clases/jugador';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
 import { JugadoresService } from '../../servicios/jugadores.service';
 @Component({
   selector: 'app-jugadores-listado',
@@ -7,11 +9,15 @@ import { JugadoresService } from '../../servicios/jugadores.service';
 })
 export class JugadoresListadoComponent implements OnInit {
 
-  listado:any
-  miJugadoresServicio:JugadoresService
+  jugador: Jugador;
+  listadoJugadores:Array<Jugador>;
+  // miJugadoresServicio:JugadoresService
+  TodosLosJugadores: any;
   
-    constructor(serviceJugadores:JugadoresService) {
-      this.miJugadoresServicio = serviceJugadores;
+    constructor(private fbService: RegistroJugadoresService) {
+      // this.miJugadoresServicio = serviceJugadores;
+      this.listadoJugadores = new Array<Jugador>();
+      this.TraerTodos();
       
     }
     
@@ -22,26 +28,29 @@ export class JugadoresListadoComponent implements OnInit {
 
 
   TraerTodos(){
-    //alert("totos");
-    this.miJugadoresServicio.traertodos('jugadores/','todos').then(data=>{
-      //console.info("jugadores listado",(data));
-      this.listado= data;
-
+    this.fbService.ObtenerJugadores().subscribe(jugadores=>{
+      jugadores.forEach(jugador=>{
+        let nuevo = new Jugador();
+        nuevo.correo = jugador.id;
+        nuevo.puntaje = jugador.data().Puntaje;
+        this.listadoJugadores.push(nuevo);
+      })
     })
+    // console.log(this.listadoJugadores);
   }
-  TraerGanadores(){
-    this.miJugadoresServicio.traertodos('jugadores/','ganadores').then(data=>{
-      //console.info("jugadores listado",(data));
-      this.listado= data;
+  // TraerGanadores(){
+  //   this.miJugadoresServicio.traertodos('jugadores/','ganadores').then(data=>{
+  //     //console.info("jugadores listado",(data));
+  //     this.listado= data;
 
-    })
-  }
-  TraerPerdedores(){
-    this.miJugadoresServicio.traertodos('jugadores/','perdedores').then(data=>{
-      //console.info("jugadores listado",(data));
-      this.listado= data;
+  //   })
+  // }
+  // TraerPerdedores(){
+  //   this.miJugadoresServicio.traertodos('jugadores/','perdedores').then(data=>{
+  //     //console.info("jugadores listado",(data));
+  //     this.listado= data;
 
-    })
-  }
+  //   })
+  // }
 
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { JuegoPiedraPapelTijera } from '../../clases/juego-piedra-papel-tijera';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-ppt',
@@ -20,7 +23,9 @@ export class PptComponent implements OnInit {
   srcJugador: string;
   ocultarMostrarError: boolean = true;
   resultadoJuego: string;
-  constructor() { 
+  constructor(private fbRegistroUsers: RegistroJugadoresService,
+    private fbListadoJugadas: RegistroResultadosJuegosService,
+    private auth: AutenticacionService) { 
     this.nuevoJuego = new JuegoPiedraPapelTijera();
     this.srcMaquina = this.srcInicial;
     this.srcJugador=this.srcInicial;
@@ -48,6 +53,12 @@ export class PptComponent implements OnInit {
       this.srcJugador = this.DevolverSrcSegunOpcion(this.nuevoJuego.opcionElegida);
       this.srcMaquina = this.DevolverSrcSegunOpcion(this.opcionAleatoria);
       this.resultadoJuego = this.ValidarResultado(this.nuevoJuego.opcionElegida, this.opcionAleatoria);
+      if(this.resultadoJuego.toLowerCase()=="ganaste"){
+        this.ActualizarInformacionBD(true);
+      }
+      else if(this.resultadoJuego.toLowerCase()=="perdiste"){
+        this.ActualizarInformacionBD(false);
+      }
     }    
     else{
       this.ocultarMostrarError = false;
@@ -120,5 +131,16 @@ export class PptComponent implements OnInit {
 
   elegirTijera(){
     this.nuevoJuego.opcionElegida = "tijera";
+  }
+
+  async ActualizarInformacionBD(gano: boolean){
+    let usuario = await this.auth.ObtenerLogueado();        
+    if(gano){
+      this.fbRegistroUsers.ActualizarPuntaje(usuario.email, 5);
+      this.fbListadoJugadas.AgregarResultadoSinID("Piedra Papel Tijera", usuario.email, "Gano");
+    }
+    else{
+      this.fbListadoJugadas.AgregarResultadoSinID("Piedra Papel Tijera", usuario.email, "Perdio");
+    }
   }
 }

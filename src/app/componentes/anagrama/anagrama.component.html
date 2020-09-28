@@ -21,6 +21,7 @@
 
   <div class="container" [hidden]="ocultarResultado">
     <p> Resultado: {{ respuesta }}</p>
+    <p *ngIf="respuesta=='Ganaste'"> Sumaste 5 puntos a tu historial </p>
     <p *ngIf= "mostrarRta">La respuesta era {{ nuevoJuego.palabraSecreta }}</p>
   </div>
 

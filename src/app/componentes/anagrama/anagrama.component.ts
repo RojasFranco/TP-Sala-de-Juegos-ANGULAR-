@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { join } from 'path';
 import { JuegoAnagrama } from '../../clases/juego-anagrama';
+import { RegistroJugadoresService } from '../../servicios/registro-jugadores.service';
+import { RegistroResultadosJuegosService } from '../../servicios/registro-resultados-juegos.service';
+import { AutenticacionService } from '../../servicios/autenticacion.service';
 
 @Component({
   selector: 'app-anagrama',
@@ -18,7 +21,9 @@ export class AnagramaComponent implements OnInit {
   intentos: number;
   mostrarRta: boolean=false;
   mostrarError: boolean;
-  constructor() { 
+  constructor(private fbRegistroUsers: RegistroJugadoresService,
+    private fbListadoJugadas: RegistroResultadosJuegosService,
+    private auth: AutenticacionService) { 
     this.nuevoJuego = new JuegoAnagrama("Anagrama");
     this.intentos=3;
   }
@@ -40,12 +45,14 @@ export class AnagramaComponent implements OnInit {
     if(this.nuevoJuego.verificar()){
       this.respuesta = "Ganaste";     
       this.ResetearJuego(); 
+      this.ActualizarInformacionBD(true);
     }
     else{
       if(this.intentos==1){
         this.respuesta = "Perdiste";
         this.mostrarError=false;
         this.ResetearJuego();
+        this.ActualizarInformacionBD(false);
 
       }
       else{
@@ -53,6 +60,17 @@ export class AnagramaComponent implements OnInit {
         this.mostrarError=true;
       }
     }    
+  }
+
+  async ActualizarInformacionBD(gano: boolean){
+    let usuario = await this.auth.ObtenerLogueado();        
+    if(gano){
+      this.fbRegistroUsers.ActualizarPuntaje(usuario.email, 5);
+      this.fbListadoJugadas.AgregarResultadoSinID("Anagrama", usuario.email, "Gano");
+    }
+    else{
+      this.fbListadoJugadas.AgregarResultadoSinID("Anagrama", usuario.email, "Perdio");
+    }
   }
 
   ResetearJuego(){

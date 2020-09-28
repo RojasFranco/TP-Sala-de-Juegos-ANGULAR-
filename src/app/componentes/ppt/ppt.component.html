@@ -27,8 +27,12 @@
         <p [hidden]="ocultarMostrarError" class="alert-danger">Debe seleccionar opcion</p>
         <button (click)="Jugar()" [hidden] = "estaEnJuego" class="btn btn-primary btn-lg">Jugar</button>
         <button (click)="Verificar()" [hidden] = "!estaEnJuego" class="btn btn-success btn-lg">Listo</button>
-
-        <p *ngIf="resultadoJuego">Resultado: {{ resultadoJuego }}</p>        
+        <br>
+        <p *ngIf="resultadoJuego" class="mt-3">Resultado: {{ resultadoJuego }}</p>    
+        <p *ngIf="resultadoJuego && resultadoJuego.toLowerCase()=='ganaste'" class="alert alert-success">Sumas 5 puntos a tu historial</p>    
+        <!-- <div cla>
+            
+        </div> -->
     </div>
 </div>
 

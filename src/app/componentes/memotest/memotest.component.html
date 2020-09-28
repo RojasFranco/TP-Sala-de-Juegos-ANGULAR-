@@ -17,6 +17,9 @@
     </mat-grid-list>
 
     <p *ngIf="mostrarError" class="bg-danger mt-3">Esa posicion ya fue elegida, elija otra</p>
-    <h2 *ngIf="nuevoJuego.gano" class="text-center bg-success my-3">GANASTE</h2>
+    <h2 *ngIf="nuevoJuego.gano" class="text-center bg-success my-3">GANASTE, Sumas 5 puntos a tu historial</h2>
+    <h2 *ngIf="perdio" class="text-center bg-danger my-3">Perdiste</h2>
     <button *ngIf="juegoTermino" (click)="CrearJuegoPosiciones()" mat-raised-button color="primary">Jugar nuevamente</button>
+
+    <h2 *ngIf="mostrarIntentos" class="colorIntentos text-center mt-3">Te quedan {{ cantidadIntentos }} intentos</h2>
 </div>
