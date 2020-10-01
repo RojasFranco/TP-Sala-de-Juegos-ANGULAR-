@@ -30,6 +30,7 @@ export class ListadoComponent implements OnInit {
 
   CargarResultados(){
     if(this.jugarACargar=="todos"){
+      this.listadoPedido = [];
       this.fbListadoResultados.ObtenerTodosLosResultados().subscribe(rta=>{
         rta.forEach(rdo=>{
           this.listadoPedido.push(rdo.data());
